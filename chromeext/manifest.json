@@ -1,0 +1,17 @@
+{
+  "manifest_version": 2,
+  "name": "Selenium ToolKit extension",
+  "description": "This extension communicates with webdriver extension to update element definition",
+  "version": "1.0",
+
+  "browser_action" : {
+    "default_icon" : "images/not_connected.png",
+    "default_popup" : "popup.html"
+  },
+  "background" : {
+    "scripts" : ["scripts/background.js"]
+  },
+  "permissions" : [
+    "activeTab", "https://ajax.googleapis.com/"
+  ]
+}
