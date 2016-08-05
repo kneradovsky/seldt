@@ -1,0 +1,23 @@
+<html>
+<head><title>mock client</title>
+  <script language="JavaScript">
+  var ws = undefined;
+  function connect() {
+    ws = new WebSocket(wsurl.value);
+    ws.onmessage = function(message) {
+      response.innerHTML = message.data;
+    }
+  }
+  function send() {
+    response.innerHTML = "";
+    ws.send(request.value);
+  }
+
+  </script>
+<body>
+  <input type="text" name="wsurl" id="wsurl"><button onClick="javascript:connect()">Connect</button><br>
+  <div id="response"></div><br>
+  <textarea id="request"></textarea>
+  <button onClick="javascript:send()">Send</button>
+</body>
+</html>

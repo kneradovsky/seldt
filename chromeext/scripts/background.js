@@ -9,3 +9,8 @@ ws.onerror = function(event) {
   chrome.browserAction.setIcon({"path":"images/not_connected.png"});
   console.log(event);
 }
+
+ws.onclose = function(event) {
+  chrome.browserAction.setIcon({"path":"images/not_connected.png"});
+  console.log(event);
+}

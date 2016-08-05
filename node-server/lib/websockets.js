@@ -37,7 +37,7 @@ WSServer.prototype.onclose = function(err) {
 
 WSServer.prototype.createOnConnection = function() {
     var self=this;
-    
+
     WSServer.prototype.onconnection = function(ws) {
         var server=this;
         ws.on('message',function (msg,flags) {
@@ -46,15 +46,16 @@ WSServer.prototype.createOnConnection = function() {
                 var message=JSON.parse(msg);
                 self.emit(message.type,ws,message,flags);
             } catch(err) {
+                logger.log("error:"+err);
                 ws.send('{type: "error",data:"invalid data"}');
             }
         });
         ws.on('close',function() {
             self.emit('connclosed',ws);
         });
-        
+
     };
-    
+
     return WSServer.prototype.onconnection;
 }
 
@@ -87,4 +88,3 @@ WSServer.prototype.terminate = function() {
 WSServer.prototype.send_error=function(error) {
     logger.log(error);
 };
-
