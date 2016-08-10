@@ -6,18 +6,21 @@
     ws = new WebSocket(wsurl.value);
     ws.onmessage = function(message) {
       response.innerHTML = message.data;
+      msghistory.innerHTML= "<hr>\n<h5>Response</h5><pre>"+message.data+"</pre>"+msghistory.innerHTML;
     }
   }
   function send() {
     response.innerHTML = "";
+    msghistory.innerHTML= "<hr>\n<h5>Request</h5><pre>"+request.value+"</pre>" + msghistory.innerHTML;
     ws.send(request.value);
   }
 
   </script>
 <body>
-  <input type="text" name="wsurl" id="wsurl"><button onClick="javascript:connect()">Connect</button><br>
+  <input type="text" value="ws://localhost:3040/" name="wsurl" id="wsurl"><button onClick="javascript:connect()">Connect</button><br>
   <div id="response"></div><br>
-  <textarea id="request"></textarea>
+  <textarea rows="10" cols="50" id="request"></textarea><br/>
   <button onClick="javascript:send()">Send</button>
+  <div class="" id="msghistory"></div>
 </body>
 </html>
