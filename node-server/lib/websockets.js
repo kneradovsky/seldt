@@ -67,15 +67,18 @@ WSServer.prototype.openSession = function(socket,msg,flags) {
 }
 
 WSServer.prototype.highlight = function(socket,msg,flags) {
-    this.webbrowser === undefined || this.webbrowser.send(msg);
+    console.log("webbrowser:"+(this.webbrowser === undefined ? "undefined" : "defined"));
+    this.webbrowser === undefined || this.webbrowser.send(JSON.stringify(msg));
 }
 
 WSServer.prototype.locate = function(socket,msg,flags) {
-    this.webbrowser === undefined || this.webbrowser.send(msg);
+    console.log("webbrowser:"+(this.webbrowser === undefined ? "undefined" : "defined"));
+    this.webbrowser === undefined || this.webbrowser.send(JSON.stringify(msg));
 }
 
 WSServer.prototype.found = function(socket,msg,flags) {
-    this.webdriver === undefined || this.webdriver.send(msg);
+    console.log("webdriver:"+(this.webdriver === undefined ? "undefined" : "defined"));
+    this.webdriver === undefined || this.webdriver.send(JSON.stringify(msg));
 }
 
 

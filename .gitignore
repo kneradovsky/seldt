@@ -37,3 +37,6 @@ dist
 
 #Idea files
 .idea
+
+#chrome ext Build folder
+build 
