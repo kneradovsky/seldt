@@ -41,6 +41,7 @@ ws.onmessage = function(message) {
     var msg = JSON.parse(message.data);
     chrome.tabs.sendMessage(tabs[0].id, msg, function(response) {
       console.log(response);
+      ws.send(JSON.stringify(response));
     });
   });
 };

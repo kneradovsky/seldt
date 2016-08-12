@@ -17,20 +17,41 @@ function ContentScript() {
 
 ContentScript.prototype.highlight = function(message,response) {
   console.log(message);
-  for(element in message.elements) {
-    if(element.by=='xpath') {
-      var elcols = document.evaluate(element.value,document,null,XPathResult.UNORDERED_NODE_ITERATOR_TYPE,null);
-      this.highlightCollection(jQuery.makeArray(ecols));
+  var self = this;
+  var elements_array=[];
+  var errors = []
+  message.elements.forEach((element,index) => {
+    try {
+      if(element.by=='xpath') {
+        var elcols = document.evaluate(element.value,document,null,XPathResult.UNORDERED_NODE_ITERATOR_TYPE,null);
+        var el;
+        while((el = elcols.iterateNext())!=null) elements_array.push(el);
+      }
     }
-  }
-  response({"status":"ok"});
+    catch(e) {console.log(e);errors.push(e.message);}
+  });
+  this.highlightCollection(elements_array);
+  response({"status":(errors.length==0 ? "ok": "error"),"errors":errors});
 }
 
 ContentScript.prototype.highlightCollection = function(collection) {
-  console.log(collection);
-  var borderColor = $(collection).css("border-color");
-  $(collection).css("border-color","#FFF");
-  setTimeout(function() {$(collection).css("border-color",borderColor);},1000);
+  console.log(collection.length);
+  $(collection).each((int,el) => {
+    $(el).data("saved-border-color",$(el).css("border-color"));
+    $(el).css("border-color","#ff0000");
+    $(el).data("saved-border-style",$(el).css("border-style"));
+    $(el).css("border-style","solid");
+
+  });
+  setTimeout(() => { $(collection).each((ind,el)=>
+    {
+      $(el).css("border-color",$(el).data("saved-border-color"));
+      $(el).removeData("saved-border-color");
+      $(el).css("border-style",$(el).data("saved-border-style"));
+      $(el).removeData("saved-border-style");
+    }
+    )
+  },1000);
 
 }
 
